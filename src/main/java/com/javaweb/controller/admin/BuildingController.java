@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-
+//
 @Controller (value="buildingControllerOfAdmin")
 public class BuildingController {
     @RequestMapping(value = "/admin/building-list",method = RequestMethod.GET)
