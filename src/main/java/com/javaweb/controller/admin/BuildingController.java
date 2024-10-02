@@ -34,7 +34,7 @@ public class BuildingController {
         bd2.setId(3L);
         bd2.setName("BKL Building");
         bd2.setFloorArea(333L);
-        bd2.setAddress("02 văn tiến dũng hà nội");
+        bd2.setAddress("01 văn tiến dũng hà nội");
         bd2.setNumberOfBasement(6L);
         bd2.setManagerName("BQM");
         bd2.setManagerPhoneNumber("0900126130");
@@ -47,9 +47,8 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/admin/building-edit",method = RequestMethod.GET)
-    public ModelAndView buildingEdit(@ModelAttribute BuildingDTO buildingDTO , HttpServletRequest request){
+    public ModelAndView buildingEdit(@ModelAttribute("buildingEdit") BuildingDTO buildingDTO , HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/edit");
-        mav.addObject("buildingEdit",buildingDTO);
 
         return mav;
     }

@@ -40,6 +40,7 @@
             </small>
           </h1>
         </div><!-- /.page-header -->
+
         <div class="row">
           <div class="col-xs-12 widget-container-col ui-sortable">
             <div class="widget-box ui-sortable-handle">
@@ -58,7 +59,7 @@
 
               <div class="widget-body" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
                 <div class="widget-main" >
-                  <form:form id= "listForm" modelAttribute="modelSearch" action="${buildingListURL}" method="get" >
+                  <form:form id= "listForm" modelAttribute="modelSearch" action="${buildingListURL}" method="GET" >
                     <div class="row">
                     <!-- dòng 1 -->
                       <div class="form-group">
@@ -178,16 +179,16 @@
                         <div class="col-xs-12">
                           <div class="col-xs-9" style="padding: 5px;">
                             <label  style="margin-right: 15px" class="inline" for="">
-<%--                              <input type="checkbox" name="typeCode" id="" value="noi-that"/> Nội thất--%>
-                                  <form:checkbox path="typeCode" value="noi-that" /> Nội thất
+                              <input type="checkbox" name="typeCode" id="" value="noi-that" /> Nội thất
+
                             </label>
                             <label style="margin-right: 15px" for="">
-                            <form:checkbox path="typeCode" value="tang-tret" /> Tầng Trệt
-<%--                              <input type="checkbox" name="typeCode" id="" value="tang-tret" /> Tầng Trệt--%>
+
+                              <input type="checkbox" name="typeCode" id="" value="tang-tret" /> Tầng Trệt
                             </label>
                             <label style="margin-right: 15px" for="">
-                            <form:checkbox path="typeCode" value="nguyen-can" /> Nguyên Căn
-<%--                              <input type="checkbox" name="typeCode" id="" value="nguyen-can" /> Nguyên  Căn--%>
+
+                              <input type="checkbox" name="typeCode" id="" value="nguyen-can" /> Nguyên  Căn
                             </label>
                           </div>
                         </div>
@@ -198,7 +199,7 @@
                           <div class="col-lg-6">
                             <button style="border-radius: 10px"
                                     type="button"
-                                    class="btn btn-danger btn-sm"
+                                    class="btn btn-danger btn-xs"
                                     id="btnSearchBuilding"
                             >
                               <svg
@@ -224,6 +225,7 @@
                 </div>
               </div>
             </div>
+
             <div class="pull-right">
               <a href="/admin/building-edit">
                 <button type="button" class="btn btn-success" title="thêm tòa nhà">
@@ -346,7 +348,6 @@
         </div>
       </div><!-- /.page-content -->
     </div>
-
   </div><!-- /.main-content -->
 
   <div class="modal fade" id="assignmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">

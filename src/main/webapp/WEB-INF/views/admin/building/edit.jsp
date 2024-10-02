@@ -76,7 +76,7 @@
                   <label for="" class="col-xs-3">Kết cấu</label>
                   <div class="col-xs-5">
                     <input type="text" class="form-control" id="structure" name="structure"/>
-                    <form:input class="form-control" path=""/>
+<%--                    <form:input class="form-control" path="s"/>--%>
                   </div>
                 </div>
                 <!-- 4 -->
@@ -389,7 +389,7 @@
                     <div class="col-xs-9"></div>
                     <c:if  test="${not empty buildingEdit.id}">
                       <button  class="btn btn-success" id="btnAddBuilding"> Cập nhật tòa nhà </button>
-                       <button
+                      <button
                             class="btn btn-success"
                             id="btnCancel">
                       Hủy thao tác

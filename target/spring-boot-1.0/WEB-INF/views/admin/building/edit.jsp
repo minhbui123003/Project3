@@ -389,7 +389,7 @@
                     <div class="col-xs-9"></div>
                     <c:if  test="${not empty buildingEdit.id}">
                       <button  class="btn btn-success" id="btnAddBuilding"> Cập nhật tòa nhà </button>
-                       <button
+                      <button
                             class="btn btn-success"
                             id="btnCancel">
                       Hủy thao tác
