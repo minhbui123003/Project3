@@ -1,7 +1,12 @@
 package com.javaweb.controller.admin;
+import com.javaweb.enums.District;
+import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.service.IUserService;
+import com.javaweb.utils.DistrictCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +20,10 @@ import java.util.List;
 //
 @Controller (value="buildingControllerOfAdmin")
 public class BuildingController {
+
+    @Autowired
+    private IUserService userService;
+
     @RequestMapping(value = "/admin/building-list",method = RequestMethod.GET)
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/list");
@@ -42,13 +51,19 @@ public class BuildingController {
         responseList.add(bd2);
 
         mav.addObject("buildingList",responseList);
-
+        mav.addObject("listStaffs",userService.getStaffs());
+        mav.addObject("listDistricts", District.type());
+        mav.addObject("listTypeCode", TypeCode.listTypeCode());
         return mav;
     }
 
     @RequestMapping(value = "/admin/building-edit",method = RequestMethod.GET)
     public ModelAndView buildingEdit(@ModelAttribute("buildingEdit") BuildingDTO buildingDTO , HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/edit");
+
+
+        mav.addObject("listDistricts", District.type());
+        mav.addObject("listTypeCode", TypeCode.listTypeCode());
 
         return mav;
     }
@@ -62,6 +77,9 @@ public class BuildingController {
         buildingDTO.setName("khánh linh Building");
         buildingDTO.setFloorArea(123L);
         mav.addObject("buildingEdit",buildingDTO);
+
+        mav.addObject("listDistricts", District.type());
+        mav.addObject("listTypeCode", TypeCode.listTypeCode());
         return mav;
     }
 }

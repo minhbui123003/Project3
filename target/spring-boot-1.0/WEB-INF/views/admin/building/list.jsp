@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="buildingListURL" value="/admin/building-list"/>
+<c:url var="buildingAPI" value="/api/building"/>
 <html>
 <head>
     <title>Danh Sách Tòa Nhà</title>
@@ -83,10 +84,7 @@
                             <label for="">Quận</label>
                             <form:select  name="district" id="" class="form-control" path="district">
                               <form:option value="">-----Chọn Quận -----</form:option>
-                              <form:option value="QUAN_1">----- Quận 1 -----</form:option>
-                              <form:option value="QUAN_2">----- Quận 2 -----</form:option>
-                              <form:option value="QUAN_3">----- Quận 3 -----</form:option>
-                              <form:option value="QUAN_4">----- Quận 4 -----</form:option>
+                              <form:options items="${listDistricts}"/>
                             </form:select>
                           </div>
                           <div class="col-xs-5">
@@ -153,7 +151,7 @@
                           <div class="col-xs-5">
                             <label for="">Tên Quản lý</label>
 <%--                            <input type="text" class="form-control" name="managerName" value="" />--%>
-                            <form:input type="text" class="form-control"  path="managerName"/>
+                            <form:input  type="text" class="form-control"  path="managerName"/>
                           </div>
                           <div class="col-xs-5">
                             <label for="">Điện thoại quản lý</label>
@@ -163,13 +161,8 @@
                           <div class="col-xs-2">
                             <label for="">Nhân viên phụ trách</label>
                             <form:select  path="staffId" class="form-control">
-                              <option value="">
-                                Tên Nhân viên
-                              </option>
-                              <form:option value="1">Bùi Khánh Linh</form:option>
-                              <form:option value="2">Bùi Quang Minh</form:option>
-                              <form:option value="3">Nhân viên 3</form:option>
-                              <form:option value="4">Nhân Viên 4</form:option>
+                              <option value=""> Tên Nhân viên </option>
+                              <form:options items="${listStaffs}"/>
                             </form:select>
                           </div>
                         </div>
@@ -178,18 +171,19 @@
                       <div class="form-group">
                         <div class="col-xs-12">
                           <div class="col-xs-9" style="padding: 5px;">
-                            <label  style="margin-right: 15px" class="inline" for="">
-                              <input type="checkbox" name="typeCode" id="" value="noi-that" /> Nội thất
+<%--                            <label  style="margin-right: 15px" class="inline" for="">--%>
+<%--                              <input type="checkbox" name="typeCode" id="" value="noi-that" /> Nội thất--%>
 
-                            </label>
-                            <label style="margin-right: 15px" for="">
+<%--                            </label>--%>
+<%--                            <label style="margin-right: 15px" for="">--%>
 
-                              <input type="checkbox" name="typeCode" id="" value="tang-tret" /> Tầng Trệt
-                            </label>
-                            <label style="margin-right: 15px" for="">
+<%--                              <input type="checkbox" name="typeCode" id="" value="tang-tret" /> Tầng Trệt--%>
+<%--                            </label>--%>
+<%--                            <label style="margin-right: 15px" for="">--%>
 
-                              <input type="checkbox" name="typeCode" id="" value="nguyen-can" /> Nguyên  Căn
-                            </label>
+<%--                              <input type="checkbox" name="typeCode" id="" value="nguyen-can" /> Nguyên  Căn--%>
+<%--                            </label>--%>
+                              <form:checkboxes cssStyle="margin-left: 15px;" items="${listTypeCode}" path="typeCode" />
                           </div>
                         </div>
                       </div>
@@ -228,7 +222,7 @@
 
             <div class="pull-right">
               <a href="/admin/building-edit">
-                <button type="button" class="btn btn-success" title="thêm tòa nhà">
+                <button style="border-radius: 2px" type="button" class="btn btn-success" title="thêm tòa nhà">
                   <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -246,7 +240,7 @@
                   </svg>
                 </button>
               </a>
-              <button type="button" class="btn btn-danger" title="xóa tòa nhà">
+              <button style="border-radius: 2px" type="button" class="btn btn-danger" title="xóa tòa nhà" id="btnDeleteBuilding">
                 <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -275,7 +269,7 @@
         <div style="margin-top: 80px"></div>
         <div class="row">
           <div class="col-xs-12">
-            <table  id="simple-table" class="table table-striped table-bordered table-hover"
+            <table  id="tableList" class="table table-striped table-bordered table-hover"
             >
               <thead>
               <tr>
@@ -319,7 +313,7 @@
                 <td>${item.brokerageFee}</td>
                 <td>
                   <div class="hidden-sm hidden-xs btn-group">
-                    <button
+                    <button style="border-radius: 2px; margin-right: 3px;"
                             class="btn btn-xs btn-success"
                             title="Giao tòa nhà"
                             id="assignmentbuilding"
@@ -330,11 +324,11 @@
                       ></i>
                     </button>
 
-                    <a href="/admin/building-edit-${item.id}"  class="btn btn-xs btn-info" title="sửa tòa nhà">
+                    <a style="border-radius: 2px; margin-right: 3px;" href="/admin/building-edit-${item.id}"  class="btn btn-xs btn-info" title="sửa tòa nhà">
                       <i class="ace-icon fa fa-pencil bigger-120"></i>
                     </a>
 
-                    <button class="btn btn-xs btn-danger">
+                    <button style="border-radius: 2px" class="btn btn-xs btn-danger" title="xóa tòa nhà" onclick="deleteBuilding(${item.id})">
                       <i class="ace-icon fa fa-trash-o bigger-120"></i>
                     </button>
                   </div>
@@ -430,6 +424,39 @@
         e.preventDefault();
         $('#listForm').submit();
     });
+
+
+
+    function deleteBuilding(data){
+      var buildingId =  [data];
+      deleteBuildings(buildingId);
+    }
+
+     $('#btnDeleteBuilding').click(function (e) {
+      e.preventDefault();
+      var buildingIds = $('#tableList').find('tbody input[type = checkbox]:checked')
+              .map(function () {
+                return $(this).val();
+              }).get();
+      deleteBuildings(buildingIds);
+    });
+
+     function deleteBuildings(data){
+        $.ajax({
+            type: "Delete",
+            url: "${buildingAPI}"+"/" + data,
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "JSON",
+            success: function (response) {
+                console.log("it is oke");
+            },
+            error: function (response) {
+                console.log("no, have a problem" + response);
+            }
+        });
+     }
+
 
   </script>
 

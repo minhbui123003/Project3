@@ -1,10 +1,10 @@
-package com.javaweb.utils;
+package com.javaweb.enums;
+
 
 import java.util.Map;
 import java.util.TreeMap;
 
-
-public enum DistrictCode {
+public enum District {
     QUAN_1 ("Quận 1"),
     QUAN_2 ("Quận 2"),
     QUAN_3 ("Quận 3"),
@@ -27,7 +27,7 @@ public enum DistrictCode {
 
 
     private final String districtName;
-    DistrictCode(String districtName) {
+    District(String districtName) {
         this.districtName = districtName;
     }
 
@@ -38,10 +38,9 @@ public enum DistrictCode {
 
     public static Map<String,String> type(){
         Map<String,String> listType = new TreeMap<>();
-        for(DistrictCode item : DistrictCode.values()){
+        for(District item : District.values()){
             listType.put(item.toString() , item.districtName);
         }
         return listType;
     }
-
 }
