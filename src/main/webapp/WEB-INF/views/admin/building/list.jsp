@@ -367,21 +367,21 @@
             </thead>
 
             <tbody>
-            <tr>
-              <td class="center">
-                <input type="checkbox" id="checkbox_1" value="1"  />
-              </td>
-              <td>Nv a</td>
-            </tr>
-            <tr>
-              <td class="center">
-                <input type="checkbox" id="checkbox_2" value="2" />
-              </td>
-              <td>Nv b</td>
-            </tr>
+            <%--            <tr>--%>
+<%--              <td class="center">--%>
+<%--                <input type="checkbox" id="checkbox_1" value="1"  />--%>
+<%--              </td>--%>
+<%--              <td>Nv a</td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--              <td class="center">--%>
+<%--                <input type="checkbox" id="checkbox_2" value="2" />--%>
+<%--              </td>--%>
+<%--              <td>Nv b</td>--%>
+<%--            </tr>--%>
             </tbody>
           </table>
-          <input type="hidden" name="buildingId" id="buildingId" value="" />
+          <input type="hidden" name="buildingId"  id="buildingId" value="" />
         </div>
         <div class="modal-footer">
           <button
@@ -400,26 +400,85 @@
   </div>
 
   <script>
+
+    // giao tòa nhà
     function assignmentBuilding(buildingId){
       $('#assignmentBuildingModal').modal();
-      $('#buildingId').val();
+      loadStaffs(buildingId);
+       $('#buildingId').val(buildingId); // Gán giá trị cho buildingId
+      // $('#buildingId').val();
+
+    }
+    // search nhân viên quản lý tòa nhà từ server
+    function loadStaffs(buildingId) {
+        $.ajax({
+            type: "Get",
+            url: "${buildingAPI}/"+buildingId+"/staffs"  ,
+            // data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "JSON",
+            success: function (response) {
+                console.log("it is oke");
+                var row = '';
+                $.each(response.data, function(index, item) {
+                  row+= '<tr>';
+                  row+= '<td class="text-center"> <input type="checkbox"  value = ' + item.staffId + ' id="checkbox_' + item.staffId + '" class = "check-box-element"' + item.checked + '    /> </td>';
+                  row+= '<td  class="text-center">'+ item.fullName +'</td>'
+                  row+= '</tr>';
+
+                });
+               $('#staffList tbody').html(row);
+                console.log("okee assignmentBuilding");
+
+            },
+            error: function (response) {
+                console.log("no, have a problem" + response);
+            }
+        });
     }
 
+
+    // btn giao tòa nhà
     $('#btnAssignmentBuilding').click(function (e) {
       e.preventDefault();
       var data = {};
-      data['buildingId'] = $('#buildingId').val();
-      var staffs = $("#staffList")
-              .find('tbody input[type = checkbox]:checked')
-              .map(function () {
-                return $(this).val();
-              })
-              .get();
-
+      data['buildingId'] = $('#buildingId').val() ;
+      var staffs = $("#staffList").find('tbody input[type = checkbox]:checked')
+                                 .map(function () { return $(this).val(); })
+                                 .get();
       data["staffs"] = staffs;
+      if(data['staffs'] != '')
+        {
+          assignmentBuildingForStaff(data);
+        }
+      else{
+        window.location.href = "/admin/building-list?require = no";
+      }
       console.log("okee");
     });
 
+    // function xử lý giao tòa nhà
+    function assignmentBuildingForStaff(data) {
+       $.ajax({
+            type: "POST",
+            url: "${buildingAPI}/assignment"  ,
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "JSON",
+            success: function (response) {
+                console.log("it is oke");
+               $('#staffList tbody').html(row);
+                console.log("okee assignmentBuilding");
+
+            },
+            error: function (response) {
+                console.log("no, have a problem" + response);
+            }
+        });
+    }
+
+
+    // btn search building
     $('#btnSearchBuilding').click(function (e){
         e.preventDefault();
         $('#listForm').submit();
@@ -427,6 +486,7 @@
 
 
 
+    // function xóa 1 tòa nahf
     function deleteBuilding(data){
       var buildingId =  [data];
       deleteBuildings(buildingId);
@@ -456,7 +516,6 @@
             }
         });
      }
-
 
   </script>
 

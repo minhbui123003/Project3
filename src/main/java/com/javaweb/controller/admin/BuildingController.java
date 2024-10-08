@@ -40,7 +40,7 @@ public class BuildingController {
 
 
         BuildingSearchResponse bd2 = new BuildingSearchResponse();
-        bd2.setId(3L);
+        bd2.setId(4L);
         bd2.setName("BKL Building");
         bd2.setFloorArea(333L);
         bd2.setAddress("01 văn tiến dũng hà nội");
